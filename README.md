@@ -6,6 +6,19 @@ This project involves creating a datasource extension that maps OPC UA and Modbu
 
 # Installation
 
+```powershell
+git clone https://github.com/mhlee0328/UA-DTDL-ADX.git
+```
+
+The following environment variables **must** be defined in the docker-compose.yml:
+
+* **AzureAd__Domain** - Your Azure Domain
+* **AzureAd__TenantId** - Your TenantId
+* **AzureAd__ClientId**  - Your Azure client ID of UA Cloud Twin. A client ID can be created through AAD app registration in the Azure portal under Azure Active Directory -> Overview -> Add -> App Registration
+* **AzureAd__ClientSecret**- the Azure client secret of UA Cloud Twin. A client secret can be added after AAD app registration under Add a certificate or secret -> New client secret
+
+To successfully connect to an Azure Digital Twins service instance, the above AAD app registration must be assigned to the Azure Digital Twins Data Owner role.
+
 ****
 
 ```yaml
@@ -81,15 +94,6 @@ networks:
   umati_stack_nw:
     driver: bridge
 ```
-
-The following environment variables **must** be defined:
-
-* **AzureAd__Domain** - Your Azure Domain
-* **AzureAd__TenantId** - Your TenantId
-* **AzureAd__ClientId**  - Your Azure client ID of UA Cloud Twin. A client ID can be created through AAD app registration in the Azure portal under Azure Active Directory -> Overview -> Add -> App Registration
-* **AzureAd__ClientSecret**- the Azure client secret of UA Cloud Twin. A client secret can be added after AAD app registration under Add a certificate or secret -> New client secret
-
-To successfully connect to an Azure Digital Twins service instance, the above AAD app registration must be assigned to the Azure Digital Twins Data Owner role.
 
 
 
