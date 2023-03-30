@@ -1,0 +1,76 @@
+version: '3.9'
+services:
+  db:
+    container_name: umati-db
+    image: mhlee0328/itri_mmsl_adx_umati_mariadb:0.0.1
+    mem_limit: 5G
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: 123456
+    ports:
+      - 5053:3306
+    volumes:
+      - ./ContainerVolume/db:/var/lib/mysql
+    networks:
+      - umati_stack_nw
+ 
+ 
+
+
+
+
+  api:
+    container_name: umati-api
+    image: mhlee0328/itri_mmsl_adx_umati_api:0.0.1
+    mem_limit: 5G
+    restart: unless-stopped
+    environment:
+      - ConnectionStrings__AdtLayoutDataBase=server=db;port=3306;database=adt_layout;user=root;password=123456
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=123456
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ./Certs/https:/https:ro
+    networks:
+      - umati_stack_nw
+      
+ 
+  web:
+    container_name: umati-web
+    image: mhlee0328/itri_mmsl_adx_umati_web:0.0.1
+    mem_limit: 5G
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      # Azure AD 相關設定
+      - AzureAd__Instance=https://login.microsoftonline.com/
+      - AzureAd__Domain=mhlee0328hotmail.onmicrosoft.com
+      - AzureAd__TenantId=51557692-759d-47e4-aee6-2b7f8321ab76
+      # Azure AD App registrations OIDC相關設定 (itridev-oidc)
+      - AzureAd__ClientId=460982e1-2ba0-425b-9f5d-452ec1cee957
+      - AzureAd__ClientSecret=peQ8Q~kCTnZIHDHH93g4vSvBEruUVg63.J4cHb9i
+      - AzureAd__CallbackPath=/signin-oidc
+      - Queue__Host=queue
+      - Queue__Port=5672
+      - Queue__Username=admin
+      - Queue__Password=admin
+      - Queue__SensorQueueName=sensor
+      - Queue__CommandQueueName=command
+      - BackendUrl=https://api/
+      - OfflineMode__Enabled=false
+      - EnableFactorySimulator=false
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=123456
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    volumes:
+      - ./Certs/https:/https:ro
+    networks:
+      - umati_stack_nw
+     
+
+     
+networks:
+  umati_stack_nw:
+    driver: bridge
