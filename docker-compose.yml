@@ -15,8 +15,15 @@ services:
       - umati_stack_nw
  
  
-
-
+  db-admin:
+    container_name: umati-db-admin
+    image: mhlee0328/itri_mmsl_adx_umati_adminer:0.0.1
+    mem_limit: 5G
+    restart: unless-stopped
+    ports:
+      - 5054:8080
+    networks:
+      - umati_stack_nw
 
 
   api:
@@ -24,6 +31,8 @@ services:
     image: mhlee0328/itri_mmsl_adx_umati_api:0.0.1
     mem_limit: 5G
     restart: unless-stopped
+    ports:
+      - 5052:443
     environment:
       - ConnectionStrings__AdtLayoutDataBase=server=db;port=3306;database=adt_layout;user=root;password=123456
       - ASPNETCORE_URLS=https://+:443;http://+:80

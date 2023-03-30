@@ -1,0 +1,86 @@
+{
+    "@context": "dtmi:dtdl:context;2",
+    "@id": "dtmi:com:UmatiFactoryDemo:BasicInfo;1",
+    "@type": "Interface",
+    "displayName": "BasicInfo",
+    "contents": [ 
+      {
+        "@type": "Property",
+        "name": "ControllerName",
+        "schema": "string", 
+        "description":"控制器名稱"
+      },
+      {
+        "@type": "Property",
+        "name": "ControllerType",
+        "schema": "string",
+        "description":"控制器種類"
+      },
+      {
+        "@type": "Property",
+        "name": "MachiningType",
+        "schema": "string",
+        "description":"加工類型"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "ControllerIsConnected",
+        "schema": "boolean",
+        "description":"設備連線狀態"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "Aalarmhistory",
+        "schema": "string",
+        "description":"設備異常紀錄"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "ProgramName",
+        "schema": "string",
+        "description":"加工程式名稱"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "ActProgramStatus",
+        "schema": "string",
+        "description":"加工狀態"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "Currentblock",
+        "schema": "string",
+        "description":"當前G Code"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "Prereadblocks",
+        "schema": "string",
+        "description":"預先讀取G Code區塊"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "Machinerypositions",
+        "schema": "string",
+        "description":"XYZ機械位置"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "Relativepositions",
+        "schema": "string",
+        "description":"XYZ相對位置"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "ActSpeed",
+        "schema": "double",
+        "description":"轉速"
+      },
+      {
+        "@type": "Telemetry",
+        "name": "ActFeedrate",
+        "schema": "double",
+        "description":"進給率"
+      }
+    ]
+}
